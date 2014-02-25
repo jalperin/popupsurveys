@@ -8,12 +8,12 @@ function pkp_flacso_popup(options) {
 
 	var PROBABILITY_SHOWING = 1, // 1/1,000
 		DELAY_BEFORE_SHOWING = 10,
-		NUM_QUESTIONS_AVAILABLE = 5;
+		NUM_QUESTIONS_AVAILABLE = 4;
 
     var formID;
 
     var q_number, q_text, q_inputs; // The inputs for the actual poll question
-    var q_IP, q_URL, q_visitID, q_email; // input ID's for user's IP, Location, and VisitID
+    var q_IP, q_URL, q_visitorID, q_email; // input ID's for user's IP, Location, and VisitID
 
 	// get CSS
 	$("head").append('<link rel="stylesheet" href="' + POPUP_ABSOLUTE_FILE_PATH + '/alertify.css" />');
@@ -32,14 +32,14 @@ function pkp_flacso_popup(options) {
             email_disclaimer = 'Your email will not be shared with anyone. It will only be used to contact you for further information and to share the results of this <a href="http://flacso.org.br/oa/?lang=en" target="_blank">research project</a> between FLACSO, PKP, RedALyC, SciELO, and Latindex.';
             survey_info = 'This survey is part of a <a href="http://flacso.org.br/oa/?lang=en" target="_blank">research project</a> coordinated by FLACSO, PKP, RedALyC, SciELO, and Latindex.';
 
-            formID = '';
+            formID = '1uROy1RoJ1n1RPTvSoTT66FAT6kKD05ckgzpX2hX3dkQ';
             break;
         case 'pt':
             email_question = 'Você estaria interessado em nossa pesquisa de mais ajuda? Qual é o seu email?';
             email_disclaimer = 'O seu email não será compartilhado com ninguém. Ele só vai ser usado em contato com você para obter mais informações e para compartilhar os resultados deste <a href="http://flacso.org.br/oa/?lang=pt" target="_blank">projeto de pesquisa entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
             survey_info = 'Esta pesquisa é parte de um <a href = "http://flacso.org.br/oa/?lang=pt" target = "_blank">projeto de pesquisa</a> entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
 
-            formID = '';
+            formID = '1uROy1RoJ1n1RPTvSoTT66FAT6kKD05ckgzpX2hX3dkQ';
             break;
     }
 
@@ -52,8 +52,10 @@ function pkp_flacso_popup(options) {
 		return n;
 	}
 
-	function cookie_exists(cookie_name) {
-		return RegExp('(^|; )' + cookie_name + '=([^;]*)').exec(document.cookie)
+    // Check if the cookie exists, courtesy of
+    // http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
+    function cookie_exists(cookie_name) {
+		return (r=RegExp('(^|; )' + cookie_name + '=([^;]*)').exec(document.cookie))?r[2]:false;
 	}
 
 	// load alertify.js and then execute the poll 
@@ -97,11 +99,9 @@ function pkp_flacso_popup(options) {
 
                // The last 4 questions in the form have special meaning
                q_IP = $($questions[$questions.length-2]).find('input').attr('name');
-               q_visitID = $($questions[$questions.length-3]).find('input').attr('name');
+               q_visitorID = $($questions[$questions.length-3]).find('input').attr('name');
                q_URL = $($questions[$questions.length-4]).find('input').attr('name');
                q_email = $($questions[$questions.length-5]).find('input').attr('name');
-
-
            }
 
             // now that we have the questions, load the rest of the poll
@@ -124,16 +124,20 @@ function pkp_flacso_popup(options) {
 	function loadPoll() {
 		var formUrl = 'https://docs.google.com/a/alperin.ca/forms/d/' + formID + '/formResponse',
 			pollIDprefix = 'flacso_IDRC',
-			pollID = pollIDprefix + '_q' + q_number;
+			pollID = pollIDprefix + '_q' + q_number,
+            visitorID;
 
+        if (!(visitorID = cookie_exists(pollIDprefix + '_visitorID'))) {
+            visitorID = Math.random().toString(36).slice(2); // random alphanumeric string;;
+            document.cookie = pollIDprefix + '_visitorID' + '=' + visitorID;
+        }
+
+        // set the cookie so this user does not get polled again
+        document.cookie = pollIDprefix + '=1';
 
 		var userIP = $('#userIP').text();
-		// Check if the cookie exists, courtesy of
-		// http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
+
 		if ((!cookie_exists(pollIDprefix) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0) || (cookie_exists(pollIDprefix) && !cookie_exists(pollID))) {
-
-			var visitID = Math.random().toString(36).slice(2); // random alphanumeric string
-
 			// set the cookie specific to this question
 			document.cookie = pollID + '=1';
 
@@ -163,7 +167,7 @@ function pkp_flacso_popup(options) {
 								if (str) {
                                     post_data = {};
                                     post_data[q_email] = str;
-                                    post_data[q_visitID] = visitID;
+                                    post_data[q_visitorID] = visitorID;
                                     post_data[q_URL] = window.location.href;
                                     post_data[q_IP] = userIP;
 
@@ -179,7 +183,16 @@ function pkp_flacso_popup(options) {
 							$('.alertify-inner').after('<div class="pkp-survey-info">' + email_disclaimer + '</div>');
 						}
 					} else {
-						// alertify.alert("Successful AJAX after Cancel");
+                        post_data = {};
+                        post_data[q_visitorID] = visitorID;
+                        post_data[q_URL] = window.location.href;
+                        post_data[q_IP] = userIP;
+
+                        $.ajax({
+                            type: "POST",
+                            url: formUrl,
+                            data: post_data
+                        })
 					}
 				});
 				var formHTML = '<form id="flacso_idrc_poll_form" name="flacso_idrc_poll_form">';
@@ -188,7 +201,7 @@ function pkp_flacso_popup(options) {
 				// we have a question that is for the URL of the page being viewed
            		formHTML += '<input type="hidden" name="' + q_URL + '" value="' + window.location.href + '"/>';
 
-				formHTML += '<input type="hidden" name="' + q_visitID + '" value="' + visitID + '"/>';
+				formHTML += '<input type="hidden" name="' + q_visitorID + '" value="' + visitorID + '"/>';
 				formHTML += '<input type="hidden" name="' + q_IP + '" value="' + userIP + '"/>';
                 formHTML += '</form>';
 
@@ -200,12 +213,6 @@ function pkp_flacso_popup(options) {
 				$('.alertify-inner').after('<div class="pkp-survey-info">' + survey_info + '</div>');
 			}, DELAY_BEFORE_SHOWING);
 		}
-
-		// set the cookie so this user does not get polled again
-		document.cookie = pollIDprefix + '=1';
-
-		// expire the cookie for testing 
-		document.cookie = pollIDprefix + '=1' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 	}
 }
 
