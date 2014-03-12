@@ -64,7 +64,7 @@ function pkp_flacso_popup(options) {
         q_text, q_inputs;
 
        // Fetch the questions from the static HTML file
-       $.get('questions_' + language + '.html', function(html) {
+       $.get(POPUP_ABSOLUTE_FILE_PATH + 'questions_' + language + '.html', function(html) {
            if (q_number == 0) {
                switch (language) {
                    case 'es':
