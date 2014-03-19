@@ -10,6 +10,8 @@ This code is being used to collect survey responses from [SciELO](http://www.sci
 Put a DIV somewhere on your page with the current user's IP address and the ID "userIP", e.g.: 
 
 	<div id="userIP">10.0.0.1</div>
+	
+Or alternatively, add the `get_ip_path` option to the options array (you can point it to whatismyip.php)
 
 **If you do not have jQuery at all:**
 
