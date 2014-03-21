@@ -140,7 +140,7 @@ function pkp_flacso_popup(options) {
 
 	function loadPoll() {
 		var formUrl = 'https://docs.google.com/a/alperin.ca/forms/d/' + formID + '/formResponse',
-			pollIDprefix = 'flacso_IDRC',
+			pollIDprefix = 'flacso_IDRC_v2',
 			pollID = pollIDprefix + '_q' + q_number,
             visitorID;
 
@@ -152,7 +152,7 @@ function pkp_flacso_popup(options) {
         // set the cookie so this user does not get polled again
         document.cookie = pollIDprefix + '=1';
 
-		if ((!cookie_exists(pollIDprefix) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0) || (cookie_exists(pollIDprefix) && !cookie_exists(pollID))) {
+		if ((!cookie_exists(pollIDprefix) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0)) {
 			// set the cookie specific to this question
 			document.cookie = pollID + '=1';
 
