@@ -10,7 +10,7 @@ function pkp_flacso_popup(options) {
 		DELAY_BEFORE_SHOWING = 10,
 		NUM_QUESTIONS_AVAILABLE = 4;
 
-    var formID;
+    var formID, userIP;
 
     var q_number, q_text, q_inputs; // The inputs for the actual poll question
     var q_IP, q_URL, q_visitorID, q_email; // input ID's for user's IP, Location, and VisitID
@@ -113,8 +113,16 @@ function pkp_flacso_popup(options) {
                q_email = $($questions[$questions.length-5]).find('input').attr('name');
            }
 
-            // now that we have the questions, load the rest of the poll
-            loadPoll();
+           // now that we have the questions, load the rest of the poll
+		   if (options.get_ip_path) {
+			   $.get(options.get_ip_path, function(ip) {
+				   userIP = ip;
+				   loadPoll()
+			   })
+		   } else {
+				userIP = $('#userIP').text();
+            	loadPoll();
+			}
         });
 	});
 
@@ -143,8 +151,6 @@ function pkp_flacso_popup(options) {
 
         // set the cookie so this user does not get polled again
         document.cookie = pollIDprefix + '=1';
-
-		var userIP = $('#userIP').text();
 
 		if ((!cookie_exists(pollIDprefix) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0) || (cookie_exists(pollIDprefix) && !cookie_exists(pollID))) {
 			// set the cookie specific to this question
