@@ -6,7 +6,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
     $ip = $_SERVER['REMOTE_ADDR'];
 } else {
-	$ip = 'unknown'
+	$ip = 'unknown';
 }
 
 echo $ip;
