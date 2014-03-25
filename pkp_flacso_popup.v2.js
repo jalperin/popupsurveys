@@ -6,7 +6,7 @@ function pkp_flacso_popup(options) {
 	var POPUP_ABSOLUTE_FILE_PATH = options.popup_absolute_path;
 	var language = options.language || 'es';
 
-	var PROBABILITY_SHOWING = 1000, // 1/1,000
+	var PROBABILITY_SHOWING = 1, // 1/1,000
 		DELAY_BEFORE_SHOWING = 10,
 		NUM_QUESTIONS_AVAILABLE = 4;
 
@@ -115,7 +115,7 @@ function pkp_flacso_popup(options) {
 
            // now that we have the questions, load the rest of the poll
 		   if (options.get_ip_path) {
-			   $.get(options.get_ip_path, function(ip) {
+			   $.get(options.get_ip_path, {}, function(ip) {
 				   userIP = ip;
 				   loadPoll()
 			   })
