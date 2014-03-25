@@ -2,11 +2,11 @@ function pkp_flacso_popup(options) {
 	// allow jQuery object to be passed in
 	// in case a different version of jQuery is needed from the one globally defined
 	$ = options.jQuery || $;
-    
+
 	var POPUP_ABSOLUTE_FILE_PATH = options.popup_absolute_path;
 	var language = options.language || 'es';
 
-	var PROBABILITY_SHOWING = 1, // 1/1,000
+	var PROBABILITY_SHOWING = 1000, // 1/1,000
 		DELAY_BEFORE_SHOWING = 10,
 		NUM_QUESTIONS_AVAILABLE = 4;
 
@@ -37,8 +37,8 @@ function pkp_flacso_popup(options) {
 			demographic_survey_link = 'https://docs.google.com/a/alperin.ca/forms/d/1WHxDEbVzlRERo1QBjt9qDc-IX0zAnW7qQgAwHhe15sg/viewform';
             formID = '106brrI8UEiH3d1qrB1ZzEwLhufsRkvunXUEdhel_6X0';
 			ok_button_text = 'Respond!';
-			help_button_text = 'I want to help!';			
-			cancel_button_text = 'Close';			
+			help_button_text = 'I want to help!';
+			cancel_button_text = 'Close';
             break;
         case 'pt':
             email_question = 'Você estaria interessado em nos ajudar ainda mais? Qual é o seu email?';
@@ -47,8 +47,8 @@ function pkp_flacso_popup(options) {
 			demographic_survey_link = 'https://docs.google.com/a/alperin.ca/forms/d/1L5n0UaWP8rvi8kaV-lCTw0jcZbyx3A2anu2ugVE6vRE/viewform';
             formID = '195Ph5LbPRpxFDpQqAGMq0LJw3rlnCAOY-GfxDHHaaeY';
 			ok_button_text = 'Responder!';
-			help_button_text = 'Quero ajudar!';			
-			cancel_button_text = 'Fechar';			
+			help_button_text = 'Quero ajudar!';
+			cancel_button_text = 'Fechar';
             break;
     }
 
@@ -67,7 +67,7 @@ function pkp_flacso_popup(options) {
 		return (r=RegExp('(^|; )' + cookie_name + '=([^;]*)').exec(document.cookie))?r[2]:false;
 	}
 
-	// load alertify.js and then execute the poll 
+	// load alertify.js and then execute the poll
 	$.getScript(POPUP_ABSOLUTE_FILE_PATH + '/alertify.min.js', function() {
         q_number = pick_question();
         q_text, q_inputs;
@@ -152,7 +152,7 @@ function pkp_flacso_popup(options) {
         // set the cookie so this user does not get polled again
         document.cookie = pollIDprefix + '=1';
 
-		if ((!cookie_exists(pollIDprefix) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0)) {
+		if ((!cookie_exists(pollID) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0)) {
 			// set the cookie specific to this question
 			document.cookie = pollID + '=1';
 
@@ -160,7 +160,7 @@ function pkp_flacso_popup(options) {
 				reset();
 				alertify.confirm("", function(e) {
 					if (e) {
-						// override if the q_number is 0, as q0 is a redirect to a form	
+						// override if the q_number is 0, as q0 is a redirect to a form
 						if (q_number == 0) {
 							window.open(demographic_survey_link, '_blank');
 							alertify.success("Gracias!");
