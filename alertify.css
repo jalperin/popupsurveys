@@ -191,14 +191,14 @@
 		.alertify-button-cancel,
 		.alertify-button-cancel:hover,
 		.alertify-button-cancel:focus {
-			background-color: #FE1A00;
-			border: 1px solid #D83526;
+			background-color: #222020;
+			border: 0px solid #D83526;
 		}
 		.alertify-button-ok,
 		.alertify-button-ok:hover,
 		.alertify-button-ok:focus {
-			background-color: #5CB811;
-			border: 1px solid #3B7808;
+			background-color: #AF1414;
+			border: 0px solid #3B7808;
 		}
 
 .alertify-log {
@@ -230,7 +230,7 @@
 
 .alertify-dialog {
     padding: 5px;
-    background-color: rgba(200, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .1);
 }
 
 .alertify-message {
@@ -238,7 +238,7 @@
 }
 
 .pkp-survey-info {
-	font-size: .65em;
-	margin-top: 8px;
+	font-size: .8em;
+	margin-top: 5px;
 	margin-left: 10px;
 }
