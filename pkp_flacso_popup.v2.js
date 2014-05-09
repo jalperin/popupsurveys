@@ -21,9 +21,9 @@ function pkp_flacso_popup(options) {
     var email_question, email_disclaimer, survey_info, formID, demographic_survey_link = '';
     switch (language) {
         case 'es':
-            email_question = '¿Le interesaría ayudarnos más en nuestra investigación? <br /> ¿Cual es su correo?';
-            email_disclaimer = 'Su correo no será compartido con nadie. Solo será utilizado para contactarle para solicitar más información y compartir los resultados de este <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigación</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
-            survey_info = 'Esta encuesta es parte de un <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigación</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
+            email_question = 'Â¿Le interesarÃ­a ayudarnos mÃ¡s en nuestra investigaciÃ³n? <br /> Â¿Cual es su correo?';
+            email_disclaimer = 'Su correo no serÃ¡ compartido con nadie. Solo serÃ¡ utilizado para contactarle para solicitar mÃ¡s informaciÃ³n y compartir los resultados de este <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigaciÃ³n</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
+            survey_info = 'Esta encuesta es parte de un <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigaciÃ³n</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
 			demographic_survey_link = 'https://docs.google.com/a/alperin.ca/forms/d/148XDDKAwF7QPvikyFAYluoLK9QkZRn4LjmC-uk2aOHI/viewform';
             formID = '14mS6x4sYFKsJCAj5UtxNtCeqwwAV_3Vs30BvQ0SqZlQ';
 			ok_button_text = 'Contestar!';
@@ -41,9 +41,9 @@ function pkp_flacso_popup(options) {
 			cancel_button_text = 'Close';
             break;
         case 'pt':
-            email_question = 'Você estaria interessado em nos ajudar ainda mais? Qual é o seu email?';
-            email_disclaimer = 'O seu email não será compartilhado com ninguém. Ele só vai ser usado para obter mais informações e para compartilhar os resultados deste <a href="http://flacso.org.br/oa/?lang=pt" target="_blank">projeto de pesquisa entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
-            survey_info = 'Esta pesquisa é parte de um <a href = "http://flacso.org.br/oa/?lang=pt" target = "_blank">projeto de pesquisa</a> entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
+            email_question = 'VocÃª estaria interessado em nos ajudar ainda mais? Qual Ã© o seu email?';
+            email_disclaimer = 'O seu email nÃ£o serÃ¡ compartilhado com ninguÃ©m. Ele sÃ³ vai ser usado para obter mais informaÃ§Ãµes e para compartilhar os resultados deste <a href="http://flacso.org.br/oa/?lang=pt" target="_blank">projeto de pesquisa entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
+            survey_info = 'Esta pesquisa Ã© parte de um <a href = "http://flacso.org.br/oa/?lang=pt" target = "_blank">projeto de pesquisa</a> entre FLACSO, PKP, RedALyC, SciELO e Latindex.';
 			demographic_survey_link = 'https://docs.google.com/a/alperin.ca/forms/d/1UrppcqmMF2sJaYHGZjQyCoPZheHqcJEkzJWAXbONKLg/viewform';
             formID = '12E9ilg91CskPT0j7ZP2S_Y0asTEEoF37T61VsLH3X10';
 			ok_button_text = 'Responder!';
@@ -77,7 +77,7 @@ function pkp_flacso_popup(options) {
            if (q_number == 0) {
                switch (language) {
                    case 'es':
-                       q_text = 'Nos apoyarías contestando una breve encuesta (<2 minutos)?';
+                       q_text = 'Nos apoyarÃ­as contestando una breve encuesta (<2 minutos)?';
                        break;
                    case 'en':
                        q_text = 'Would you help us by answering a brief survey (<2 minutes)?';
