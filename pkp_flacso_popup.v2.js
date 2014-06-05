@@ -6,7 +6,7 @@ function pkp_flacso_popup(options) {
 	var POPUP_ABSOLUTE_FILE_PATH = options.popup_absolute_path;
 	var language = options.language || 'es';
 
-	var PROBABILITY_SHOWING = 1, // 1/1,000
+	var PROBABILITY_SHOWING = 250, // 1/1,000
 		DELAY_BEFORE_SHOWING = 10,
 		NUM_QUESTIONS_AVAILABLE = 4;
 
@@ -14,6 +14,8 @@ function pkp_flacso_popup(options) {
 
     var q_number, q_text, q_inputs; // The inputs for the actual poll question
     var q_IP, q_URL, q_visitorID, q_email; // input ID's for user's IP, Location, and VisitID
+
+    var special_sample = true;
 
 	// get CSS
 	$("head").append('<link rel="stylesheet" href="' + POPUP_ABSOLUTE_FILE_PATH + '/alertify.css" />');
@@ -71,6 +73,17 @@ function pkp_flacso_popup(options) {
 	$.getScript(POPUP_ABSOLUTE_FILE_PATH + '/alertify.min.js', function() {
         q_number = pick_question();
         q_text, q_inputs;
+
+       // Special handling for sample
+       try {
+           	var y = $("meta[name=citation_publication_date]").attr('content');
+       		var i = parseInt($("meta[name=citation_abstract_html_url]").attr('content').match('id=(\\d+)')[1]);
+       		if (y == '2013' && (i % 2) == 0) {
+       			q_number = 2;
+       			special_sample = true;
+       		}
+       	}
+        catch (e) {}
 
        // Fetch the questions from the static HTML file
        $.get(POPUP_ABSOLUTE_FILE_PATH + 'questions_' + language + '.html', function(html) {
@@ -141,8 +154,13 @@ function pkp_flacso_popup(options) {
 	function loadPoll() {
 		var formUrl = 'https://docs.google.com/a/alperin.ca/forms/d/' + formID + '/formResponse',
 			pollIDprefix = 'flacso_IDRC_v2',
-			pollID = pollIDprefix + '_q' + q_number,
             visitorID;
+
+            if (special_sample) {
+            	pollID = pollIDprefix + '_specialsample';
+            } else {
+            	pollID = pollIDprefix + '_q' + q_number;
+            }
 
         if (!(visitorID = cookie_exists(pollIDprefix + '_visitorID'))) {
             visitorID = Math.random().toString(36).slice(2); // random alphanumeric string;;
@@ -152,7 +170,7 @@ function pkp_flacso_popup(options) {
         // set the cookie so this user does not get polled again
         document.cookie = pollIDprefix + '=1';
 
-		if ((!cookie_exists(pollID) && Math.floor(Math.random() * PROBABILITY_SHOWING) == 0)) {
+		if ((!cookie_exists(pollID) && (special_sample || Math.floor(Math.random() * PROBABILITY_SHOWING) == 0))) {
 			// set the cookie specific to this question
 			document.cookie = pollID + '=1';
 
