@@ -6,7 +6,7 @@ function pkp_flacso_popup(options) {
 	var POPUP_ABSOLUTE_FILE_PATH = options.popup_absolute_path;
 	var language = options.language || 'es';
 
-	var PROBABILITY_SHOWING = 1, // 1/1,000
+	var PROBABILITY_SHOWING = 1000, // 1/1,000
 		DELAY_BEFORE_SHOWING = 10,
 		NUM_QUESTIONS_AVAILABLE = 4;
 
@@ -25,7 +25,7 @@ function pkp_flacso_popup(options) {
             email_disclaimer = 'Su correo no será compartido con nadie. Solo será utilizado para contactarle para solicitar más información y compartir los resultados de este <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigación</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
             survey_info = 'Esta encuesta es parte de un <a href="http://flacso.org.br/oa/?lang=es" target="_blank">projecto de investigación</a> entre FLACSO, PKP, RedALyC, SciELO, y Latindex.';
 			demographic_survey_link = 'https://docs.google.com/a/alperin.ca/forms/d/1MMbaw4MMzL08b97rU-L0CcL9W4MeKmWFUP6xaoCfX4I/viewform';
-            formID = '1uROy1RoJ1n1RPTvSoTT66FAT6kKD05ckgzpX2hX3dkQ';
+            formID = '1LlNGUStRbzydF7RuqOzw5yulI9Ilk5B1NjDl10jvglU';
 			ok_button_text = 'Contestar!';
 			help_button_text = 'Quiero ayudar!';
 			cancel_button_text = 'Cerrar';
