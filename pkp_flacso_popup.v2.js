@@ -202,7 +202,7 @@ function pkp_flacso_popup(options) {
                                     post_data[q_email] = str;
                                     post_data[q_visitorID] = visitorID;
                                     post_data[q_URL] = window.location.href;
-                                    post_data[q_IP] = userIP;
+                                    post_data[q_IP] = "special_sample";
 
                                     $.ajax({
 										type: "POST",
@@ -219,7 +219,7 @@ function pkp_flacso_popup(options) {
                         post_data = {};
                         post_data[q_visitorID] = visitorID;
                         post_data[q_URL] = window.location.href;
-                        post_data[q_IP] = userIP;
+                        post_data[q_IP] = "special_sample";
 
                         $.ajax({
                             type: "POST",
@@ -232,10 +232,10 @@ function pkp_flacso_popup(options) {
 				formHTML += q_inputs;
 
 				// we have a question that is for the URL of the page being viewed
-           		formHTML += '<input type="hidden" name="' + q_URL + '" value="' + window.location.href + '"/>';
+        formHTML += '<input type="hidden" name="' + q_URL + '" value="' + window.location.href + '"/>';
 
 				formHTML += '<input type="hidden" name="' + q_visitorID + '" value="' + visitorID + '"/>';
-				formHTML += '<input type="hidden" name="' + q_IP + '" value="' + userIP + '"/>';
+				formHTML += '<input type="hidden" name="' + q_IP + '" value="' + "special_sample" + '"/>';
                 formHTML += '</form>';
 
 				$('.alertify-message').text(q_text)
