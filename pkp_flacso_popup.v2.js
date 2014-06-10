@@ -202,7 +202,11 @@ function pkp_flacso_popup(options) {
                                     post_data[q_email] = str;
                                     post_data[q_visitorID] = visitorID;
                                     post_data[q_URL] = window.location.href;
-                                    post_data[q_IP] = "special_sample";
+                                    if (special_sample) {
+                                      post_data[q_IP] = "classify_sample";
+                                    } else {
+                                      post_data[q_IP] = "regular_sample";
+                                    }
 
                                     $.ajax({
 										type: "POST",
@@ -219,7 +223,11 @@ function pkp_flacso_popup(options) {
                         post_data = {};
                         post_data[q_visitorID] = visitorID;
                         post_data[q_URL] = window.location.href;
-                        post_data[q_IP] = "special_sample";
+                        if (special_sample) {
+                          post_data[q_IP] = "classify_sample";
+                        } else {
+                          post_data[q_IP] = "regular_sample";
+                        }
 
                         $.ajax({
                             type: "POST",
@@ -235,8 +243,13 @@ function pkp_flacso_popup(options) {
         formHTML += '<input type="hidden" name="' + q_URL + '" value="' + window.location.href + '"/>';
 
 				formHTML += '<input type="hidden" name="' + q_visitorID + '" value="' + visitorID + '"/>';
-				formHTML += '<input type="hidden" name="' + q_IP + '" value="' + "special_sample" + '"/>';
-                formHTML += '</form>';
+				
+        if (special_sample) {
+          formHTML += '<input type="hidden" name="' + q_IP + '" value="' + "classify_sample" + '"/>';
+        } else {
+          formHTML += '<input type="hidden" name="' + q_IP + '" value="' + "regular_sample" + '"/>';  
+        }
+        formHTML += '</form>';
 
 				$('.alertify-message').text(q_text)
 
